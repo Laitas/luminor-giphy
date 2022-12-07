@@ -48,6 +48,8 @@ const Wrapper = styled.header`
 
   section {
     display: flex;
+    flex: 1;
+    justify-content: end;
   }
 
   section img {
