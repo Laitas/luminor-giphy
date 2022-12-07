@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import Header from "./components/Header";
+import Image from "./components/Image";
+import { DarkGray } from "./styles";
+import { ContextProvider, useImagesContext } from "./useImagesContext";
 
 function App() {
+  const { images } = useImagesContext();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Main>
+        {images.map((img, idx) => (
+          <Image key={img.id} img={img} idx={idx} />
+        ))}
+      </Main>
+    </>
   );
 }
 
-export default App;
+const AppWrapper = () => (
+  <ContextProvider>
+    <App />
+  </ContextProvider>
+);
+
+export default AppWrapper;
+
+const Main = styled.main`
+  background: ${DarkGray};
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 2fr));
+  gap: 1.25rem;
+  padding: 1.25rem;
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(0, 3fr));
+  }
+
+  @media only screen and (min-width: 992px) {
+    grid-template-columns: repeat(4, minmax(0, 4fr));
+  }
+`;
