@@ -54,6 +54,10 @@ const Wrapper = styled.header`
 
   section img {
     margin-right: 0.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: auto;
+    margin-bottom: auto;
     @media (max-width: 768px) {
       display: none;
     }
