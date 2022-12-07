@@ -18,9 +18,9 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <img src="/TESTHY.svg" alt="" />
+      <img src="./luminor-giphy/TESTHY.svg" alt="" />
       <section>
-        <img src="/info.svg" alt="" />
+        <img src="./luminor-giphy/info.svg" alt="" />
         <p>
           Press <span>spacebar</span> to shuffle or{" "}
           <button onClick={shuffleImages}>Click here</button>

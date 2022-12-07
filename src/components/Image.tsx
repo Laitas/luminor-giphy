@@ -18,12 +18,12 @@ const Image = ({ img, idx }: Types) => {
 
       {img.locked ? (
         <span>
-          <img src="/unlocked.svg" alt="" />
+          <img src="./luminor-giphy/unlocked.svg" alt="" />
           Click to unlock
         </span>
       ) : (
         <span>
-          <img src="/locked.svg" alt="" />
+          <img src="./luminor-giphy/locked.svg" alt="" />
           Click to lock
         </span>
       )}
