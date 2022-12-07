@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/luminor-giphy/static/css/main.c379c420.css",
+    "main.js": "/luminor-giphy/static/js/main.c8c16653.js",
+    "static/js/787.4607c075.chunk.js": "/luminor-giphy/static/js/787.4607c075.chunk.js",
+    "index.html": "/luminor-giphy/index.html",
+    "main.c379c420.css.map": "/luminor-giphy/static/css/main.c379c420.css.map",
+    "main.c8c16653.js.map": "/luminor-giphy/static/js/main.c8c16653.js.map",
+    "787.4607c075.chunk.js.map": "/luminor-giphy/static/js/787.4607c075.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c379c420.css",
+    "static/js/main.c8c16653.js"
+  ]
+}
