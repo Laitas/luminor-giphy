@@ -9,12 +9,14 @@ import axios from "axios";
 export type ImagesContent = {
   images: Image[];
   toggleImageLock: (id: string, idx: number) => void;
-  shuffleImages: () => void;
+  shuffleImages: () => Promise<void>;
 };
 export const ImagesContext = createContext<ImagesContent>({
   images: [],
   toggleImageLock: () => {},
-  shuffleImages: () => {},
+  shuffleImages: () => {
+    throw new Error("missing context");
+  },
 });
 export const useImagesContext = () => useContext(ImagesContext);
 
@@ -36,16 +38,16 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
     return data.data.data as Image[];
   };
 
-  const shuffleImages = () => {
-    fetchGifs().then((data) => {
-      const sortedImages = data.sort((a, b) =>
-        a.import_datetime > b.import_datetime ? 1 : -1
-      );
-      const filteredLocked = images.filter((img) => img.locked);
-      filteredLocked?.map((img) => (sortedImages[img.idx as number] = img));
+  const shuffleImages = async () => {
+    const res = await fetchGifs();
 
-      setImages(sortedImages);
-    });
+    const sortedImages = res.sort((a, b) =>
+      a.import_datetime > b.import_datetime ? 1 : -1
+    );
+    const filteredLocked = images.filter((img) => img.locked);
+    filteredLocked?.map((img) => (sortedImages[img.idx as number] = img));
+
+    setImages(sortedImages);
   };
 
   useEffect(() => {

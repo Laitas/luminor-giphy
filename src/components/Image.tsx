@@ -1,6 +1,6 @@
 import { Image as ImageType, useImagesContext } from "../useImagesContext";
 import styled from "styled-components";
-import { Pink } from "../styles";
+import { PINK } from "../styles";
 
 interface Types {
   img: ImageType;
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
   cursor: pointer;
   position: relative;
   &:hover {
-    border: 4px solid ${Pink};
+    border: 4px solid ${PINK};
     span {
       opacity: 100;
     }
@@ -47,7 +47,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    aspect-ratio: 67 / 52;
+    aspect-ratio: 16 / 9;
   }
 
   span {

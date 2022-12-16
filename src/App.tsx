@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Header from "./components/Header";
 import Image from "./components/Image";
-import { DarkGray } from "./styles";
+import { DARK_GRAY } from "./styles";
 import { ContextProvider, useImagesContext } from "./useImagesContext";
 
 function App() {
@@ -28,7 +28,7 @@ const AppWrapper = () => (
 export default AppWrapper;
 
 const Main = styled.main`
-  background: ${DarkGray};
+  background: ${DARK_GRAY};
   min-height: 100vh;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 2fr));

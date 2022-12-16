@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { DarkGray, Pink } from "../styles";
+import { DARK_GRAY, PINK } from "../styles";
 import { useImagesContext } from "../useImagesContext";
 
 const Header = () => {
@@ -36,7 +36,7 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.header`
-  background: ${DarkGray};
+  background: ${DARK_GRAY};
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
@@ -79,7 +79,7 @@ const Wrapper = styled.header`
     color: white;
     border: none;
     cursor: pointer;
-    background: ${Pink};
+    background: ${PINK};
     border-radius: 4px;
     padding: 0.5rem 1rem;
     margin-left: 0.25rem;
