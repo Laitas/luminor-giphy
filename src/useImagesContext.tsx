@@ -1,19 +1,23 @@
 import {
   createContext,
+  Dispatch,
   ReactNode,
+  SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
-import axios from "axios";
+import { getGifs } from "./api/getGifs";
+import { Image } from "./types";
 export type ImagesContent = {
   images: Image[];
-  toggleImageLock: (id: string, idx: number) => void;
+  setImages: Dispatch<SetStateAction<Image[]>>;
   shuffleImages: () => Promise<void>;
 };
 export const ImagesContext = createContext<ImagesContent>({
   images: [],
-  toggleImageLock: () => {},
+  setImages: () => {},
   shuffleImages: () => {
     throw new Error("missing context");
   },
@@ -26,61 +30,32 @@ const localStorageImages =
 
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [images, setImages] = useState<Image[]>(localStorageImages ?? []);
+  const [hasInitialLoad, setHasInitialLoad] = useState(false);
 
-  const fetchGifs = async () => {
-    const data = await axios.get(`https://api.giphy.com/v1/gifs/trending`, {
-      params: {
-        api_key: process.env.REACT_APP_GIPHY_KEY,
-        limit: 12,
-        offset: Math.floor(Math.random() * 100),
-      },
-    });
-    return data.data.data as Image[];
-  };
-
-  const shuffleImages = async () => {
-    const res = await fetchGifs();
+  const shuffleImages = useCallback(async () => {
+    const res = await getGifs();
 
     const sortedImages = res.sort((a, b) =>
       a.import_datetime > b.import_datetime ? 1 : -1
     );
     const filteredLocked = images.filter((img) => img.locked);
-    filteredLocked?.map((img) => (sortedImages[img.idx as number] = img));
+    filteredLocked?.map(
+      (img) => typeof img.idx !== "undefined" && (sortedImages[img.idx] = img)
+    );
 
     setImages(sortedImages);
-  };
+  }, [images]);
 
   useEffect(() => {
-    shuffleImages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const toggleImageLock = (id: string, idx: number) => {
-    const updatedImages = images.map((img) =>
-      img.id === id ? { ...img, locked: !img.locked, idx } : img
-    );
-    setImages(updatedImages);
-    localStorage.setItem("images", JSON.stringify(updatedImages));
-  };
+    if (!hasInitialLoad) {
+      shuffleImages();
+      setHasInitialLoad(true);
+    }
+  }, [hasInitialLoad, shuffleImages]);
 
   return (
-    <ImagesContext.Provider value={{ images, toggleImageLock, shuffleImages }}>
+    <ImagesContext.Provider value={{ images, setImages, shuffleImages }}>
       {children}
     </ImagesContext.Provider>
   );
 };
-
-export interface Image {
-  id: string;
-  images: {
-    downsized: {
-      url: string;
-    };
-    downsized_medium: {
-      url: string;
-    };
-  };
-  import_datetime: string;
-  locked?: boolean;
-  idx?: number;
-}

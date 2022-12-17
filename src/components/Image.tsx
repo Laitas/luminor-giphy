@@ -1,6 +1,7 @@
-import { Image as ImageType, useImagesContext } from "../useImagesContext";
+import { useImagesContext } from "../useImagesContext";
 import styled from "styled-components";
 import { PINK } from "../styles";
+import type { Image as ImageType } from "../types";
 
 interface Types {
   img: ImageType;
@@ -8,7 +9,16 @@ interface Types {
 }
 
 const Image = ({ img, idx }: Types) => {
-  const { toggleImageLock } = useImagesContext();
+  const { images, setImages } = useImagesContext();
+
+  const toggleImageLock = (id: string, idx: number) => {
+    const updatedImages = images.map((img) =>
+      img.id === id ? { ...img, locked: !img.locked, idx } : img
+    );
+    setImages(updatedImages);
+    localStorage.setItem("images", JSON.stringify(updatedImages));
+  };
+
   return (
     <Wrapper onClick={() => toggleImageLock(img.id, idx)}>
       <picture>

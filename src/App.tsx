@@ -29,7 +29,7 @@ export default AppWrapper;
 
 const Main = styled.main`
   background: ${DARK_GRAY};
-  min-height: 100vh;
+  min-height: calc(100vh - ${document.querySelector("header")?.offsetHeight}px);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 2fr));
   gap: 1.25rem;
